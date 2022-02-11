@@ -44,7 +44,7 @@ def get():
         return data
 
        
-    # conn = mariadb.connect(host="127.0.0.1", user="root", password="1234", port=3306,db="stuuuudy")
+    # conn = mariadb.connect(host="127.0.0.1", user="", password="", port=3306,db="")
     # curs = conn.cursor()
     # coin_name = 'ETH'
     # how_much = 10000000
