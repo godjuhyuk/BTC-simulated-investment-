@@ -24,9 +24,9 @@
 	<div>
 		-----------------------------------------------------------------------------------------
 		<br>
-		
+
 		<table border="2">
-			<thead > 
+			<thead>
 				<tr>
 					<td>자산</td>&nbsp;&nbsp;&nbsp;&nbsp;
 					<td>실시간 시세</td>&nbsp;&nbsp;&nbsp;&nbsp;
@@ -49,31 +49,40 @@
 				console.log(response)
 			})
 		}
-		// const sortByPosition = obj => {
-		// 	const order = [], res = {};
-		// 	Object.keys(obj).forEach(key => {
-				
-		// 		return order[obj[key]['fluctate_rate_24H'] - 1] = key;
-		// 	});
-		// 	order.forEach(key => {
-		// 		res[key] = obj[key];
-		// 	});
-		// 	return res;
-		// }
+	
+		function detail_test(coin_name) {
+			axios.post('/get_coin_detail').then(function (response) {
+				console.log(response)
+			})
+
+		}
+		console.log('here is test_branch')
+		console.log('here is test_branch')
+		console.log('here is test_branch')
+		console.log('here is test_branch')
+		console.log('here is test_branch')
+		console.log('here is test_branch')
 		async function get() {
 
 			await axios.get('/get_api').then(function (response) {
-				
-				
+
 				var html = ''
 				let btc_dict = response.data
-				// sortByPosition(btc_dict)
-				let key_dict = Object.keys(btc_dict)
-				for (let i = 0; i < key_dict.length; i++) {
-					html += '<tr><td>' + key_dict[i] + '</td>';
-					html += '<td>' + btc_dict[key_dict[i]].closing_price + ' (KRW)</td>';
-					html += '<td>' + btc_dict[key_dict[i]].fluctate_rate_24H + '%</td>';
-					html += '<td>' + btc_dict[key_dict[i]].acc_trade_value_24H + '</td></tr>';
+				const order = []
+				const btc_key = []
+				Object.keys(btc_dict).sort().reverse().forEach(key => {
+					return order[parseInt(btc_dict[key]['acc_trade_value_24H'] - 2)] = key;
+				});
+				Object.keys(order).reverse().forEach(key => {
+					btc_key.push(order[key])
+				});
+				
+				
+				for (let i = 0; i < btc_key.length; i++) {
+					html += '<tr onclick="detail_test(' + btc_key[i] + ')"><td>' + btc_key[i] + '</td>';
+					html += '<td>' + btc_dict[btc_key[i]].closing_price + ' (KRW)</td>';
+					html += '<td>' + btc_dict[btc_key[i]].fluctate_rate_24H + '%</td>';
+					html += '<td>' + btc_dict[btc_key[i]].acc_trade_value_24H + '</td></tr>';
 				}
 
 				$('#tbody').html(html)
@@ -83,7 +92,7 @@
 				}, 3000)
 
 
-			}).catch(function(error){
+			}).catch(function (error) {
 				console.log('!!!!!!!!!!!!!ERROR!!!!!!!!!!!!!!')
 				console.log(error)
 			})
